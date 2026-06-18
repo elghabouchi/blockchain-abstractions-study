@@ -79,8 +79,11 @@ blockchain-abstractions-study/
 │   ├── ethereum/
 │   └── eosio/
 │
-├── reports/
-│   └── pfe-technical-report.pdf
+├── academic-notes/
+│   ├── literature-review.md
+│   ├── methodology.md
+│   ├── comparative-analysis.md
+│   └── research-observations.md
 │
 └── README.md
 ```
