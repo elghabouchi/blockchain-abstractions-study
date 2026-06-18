@@ -53,3 +53,8 @@ This repository does not aim to propose a new blockchain protocol, introduce a c
 Instead, it uses smart contract implementations and decentralized application prototypes originally developed in a practical project context as implementation-based reference points for examining broader blockchain architecture, distributed systems design, and security considerations.
 
 The resulting analysis is documentation-oriented and intended to demonstrate understanding of distributed ledger architectures, smart contract execution models, storage abstractions, and platform-level trade-offs relevant to blockchain and distributed systems research.
+
+## Navigation
+
+- [Back to README](../README.md)
+- Next: [Distributed Ledger Abstractions](distributed-ledger-abstractions.md)

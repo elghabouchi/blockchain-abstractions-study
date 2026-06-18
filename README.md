@@ -60,6 +60,40 @@ The main goals are to:
 * Ethereum: ecosystem maturity, smart contract flexibility, gas cost constraints
 * EOSIO: account permissions, DPoS model, performance-oriented architecture
 
+## Reading Path
+
+This repository is organized as a progressive academic study. Readers are encouraged to start with the research questions, then move through the technical documents that address each question.
+
+1. [Research Questions](docs/research-questions.md)
+   Defines the main research question and the sub-questions guiding the repository.
+
+2. [Distributed Ledger Abstractions](docs/distributed-ledger-abstractions.md)
+   Introduces the core distributed ledger concepts used throughout the study.
+
+3. [Blockchain Architectures](docs/blockchain-architectures.md)
+   Compares the architectural models of Ethereum, Solana, and EOSIO.
+
+4. [Consensus and Validation](docs/consensus-and-validation.md)
+   Discusses how transaction validation, ordering, and finality are handled across platforms.
+
+5. [Storage Models](docs/storage-models.md)
+   Examines the trade-offs between on-chain storage and off-chain decentralized storage systems such as IPFS.
+
+6. [Security Models](docs/security-models.md)
+   Summarizes platform-level security assumptions, smart contract risks, and authentication models.
+
+7. [Methodology](academic-notes/methodology.md)
+   Explains how the comparative analysis is structured.
+
+8. [Comparative Analysis](academic-notes/comparative-analysis.md)
+   Provides a platform-level comparison of Ethereum, Solana, and EOSIO.
+
+9. [Research Observations](academic-notes/research-observations.md)
+   Summarizes the main observations extracted from the study.
+
+10. [Future Directions](academic-notes/future-directions.md)
+    Presents possible extensions related to distributed systems security, blockchain protocols, and smart contract security.
+
 ## Repository Structure
 
 ```text
