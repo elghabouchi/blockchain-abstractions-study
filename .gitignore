@@ -1,0 +1,31 @@
+# Node.js / React
+node_modules/
+dist/
+build/
+coverage/
+
+# Rust / Solana / Anchor
+target/
+.anchor/
+test-ledger/
+
+# Ethereum / Brownie / Hardhat
+artifacts/
+cache/
+reports/
+.pytest_cache/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Environment files
+.env
+.env.local
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
