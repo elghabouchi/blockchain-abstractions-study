@@ -1,14 +1,14 @@
 # Blockchain Abstractions Study
 
-An academic repository focused on the study of blockchain and distributed ledger abstractions through comparative implementations across Solana, Ethereum, and EOSIO.
+An academic repository focused on understanding blockchain and distributed ledger concepts through comparative implementations across Solana, Ethereum, and EOSIO.
 
-This repository is based on my undergraduate final-year project and reorganized as a research-oriented study of distributed ledger systems, blockchain architectures, smart contract execution models, and on-chain/off-chain storage strategies.
+This repository is based on my undergraduate final-year project and reorganized as an academic study of distributed ledger systems, blockchain architectures, smart contract execution models, and on-chain/off-chain storage strategies.
 
 ## Objective
 
-The objective of this repository is to understand how blockchain systems provide core distributed ledger properties such as decentralized trust, transaction validation, auditability, immutability, and programmable execution.
+The objective of this repository is to study how blockchain systems provide core distributed ledger properties such as decentralized trust, transaction validation, auditability, immutability, and programmable execution.
 
-The project does not focus only on building decentralized applications. Instead, it studies how different blockchain platforms implement similar system-level concepts through different architectural choices.
+The project does not focus only on building decentralized applications. Instead, it uses decentralized applications as a practical context to compare how different blockchain platforms implement similar system-level concepts through different architectural choices.
 
 The main goals are to:
 
@@ -17,7 +17,7 @@ The main goals are to:
 * Analyze consensus-based transaction validation
 * Explore on-chain and off-chain storage strategies
 * Understand blockchain platform trade-offs
-* Document technical observations in a research-oriented format
+* Document technical observations in an academic format
 
 ## Areas of Study
 
@@ -106,7 +106,7 @@ The application context included:
 * Smart contract interaction
 * Decentralized file storage using IPFS
 
-In this repository, the project is presented from a broader academic perspective: the tourism use case is treated as an application scenario for studying distributed ledger abstractions and blockchain architecture trade-offs.
+In this repository, the tourism use case is treated as an application scenario for studying distributed ledger abstractions, blockchain architecture trade-offs, and smart contract interaction models.
 
 ## Current Roadmap
 
@@ -150,7 +150,7 @@ It also serves as a bridge between my work in cryptography and my interest in bl
 
 ## Disclaimer
 
-This repository is educational and research-oriented. The implementations and notes are not intended for production use without further security review, testing, and formal analysis.
+This repository is educational and academic-oriented. The implementations and notes are not intended for production use without further security review, testing, and formal analysis.
 
 ## Author
 
