@@ -64,28 +64,34 @@ The main goals are to:
 
 ```text
 blockchain-abstractions-study/
-│
+
+├── README.md
+
 ├── docs/
-│   ├── overview.md
-│   ├── architecture.md
+│   ├── research-questions.md
 │   ├── distributed-ledger-abstractions.md
+│   ├── blockchain-architectures.md
 │   ├── consensus-and-validation.md
 │   ├── storage-models.md
-│   ├── platform-comparison.md
-│   └── security-notes.md
-│
-├── implementations/
-│   ├── solana/
-│   ├── ethereum/
-│   └── eosio/
-│
+│   └── security-models.md
+
 ├── academic-notes/
 │   ├── literature-review.md
 │   ├── methodology.md
 │   ├── comparative-analysis.md
-│   └── research-observations.md
-│
-└── README.md
+│   ├── research-observations.md
+│   └── future-directions.md
+
+├── implementations/
+│   ├── ethereum/
+│   ├── solana/
+│   └── eosio/
+
+└── diagrams/
+    ├── architecture-overview.png
+    ├── ethereum-state-model.png
+    ├── solana-account-model.png
+    └── transaction-flow.png
 ```
 
 ## Original Application Context
