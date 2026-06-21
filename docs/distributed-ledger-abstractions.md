@@ -143,6 +143,16 @@ The following documents use these abstractions to analyze:
 
 ---
 
+## References Used
+
+This document is supported by the following references listed in [Literature Review and References](../academic-notes/literature-review.md):
+
+- Nakamoto, *Bitcoin: A Peer-to-Peer Electronic Cash System*
+- Lamport, Shostak, and Pease, *The Byzantine Generals Problem*
+- Castro and Liskov, *Practical Byzantine Fault Tolerance*
+- Benet, *IPFS — Content Addressed, Versioned, P2P File System*
+
+
 ## Navigation
 
 * [Back to README](../README.md)

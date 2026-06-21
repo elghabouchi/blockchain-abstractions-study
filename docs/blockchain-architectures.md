@@ -200,6 +200,21 @@ These topics are addressed separately in the relevant documents of this reposito
 
 ---
 
+## References Used
+
+This document is supported by the following references listed in [Literature Review and References](../academic-notes/literature-review.md):
+
+- Buterin, *Ethereum: A Next-Generation Smart Contract and Decentralized Application Platform*
+- Ethereum Documentation
+- Solidity Documentation
+- Yakovenko, *Solana: A New Architecture for a High Performance Blockchain*
+- Solana Documentation
+- Anchor Documentation
+- Larimer, *EOS.IO Technical White Paper*
+- EOSIO Developer Documentation
+- Antelope Documentation
+- Xu et al., *A Taxonomy of Blockchain-Based Systems for Architecture Design*
+
 ## Navigation
 
 * [Back to README](../README.md)
