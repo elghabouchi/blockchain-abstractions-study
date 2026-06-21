@@ -1,266 +1,215 @@
-# Consensus and Validation
+# Storage Models
 
 ## Overview
 
-This document discusses consensus and transaction validation in Ethereum, Solana, and EOSIO.
+This document discusses storage models in blockchain-based applications, with a focus on the distinction between on-chain storage and off-chain content-addressed storage.
 
-It builds on the architectural comparison introduced in [Blockchain Architectures](blockchain-architectures.md) and focuses on how each platform handles transaction ordering, validation, finality, and trust assumptions.
+It builds on the concepts introduced in [Distributed Ledger Abstractions](distributed-ledger-abstractions.md) and the platform comparison presented in [Blockchain Architectures](blockchain-architectures.md).
 
-The goal is not to provide a full formal treatment of consensus protocols. Instead, this document identifies the consensus-related concepts that are relevant for comparing blockchain platforms from a distributed systems and security perspective.
+The goal is to examine how Ethereum, Solana, and EOSIO handle application state, and how external storage systems such as IPFS can be used to reduce on-chain storage requirements while preserving verifiable references to off-chain data.
 
-Consensus and validation are closely related but distinct:
-
-* **Validation** determines whether a transaction satisfies protocol and application-level rules.
-* **Consensus** determines how network participants agree on the ordering and inclusion of valid transactions.
-* **Finality** describes when a transaction or block can be considered difficult or impractical to reverse under the platform’s assumptions.
+This document does not provide a complete storage benchmark. Instead, it identifies the main architectural trade-offs relevant to decentralized application design.
 
 ---
 
-## 1. General Consensus and Validation Concepts
+## 1. On-chain Storage
 
-A blockchain system must coordinate multiple participants that may not fully trust each other.
+On-chain storage refers to data stored directly in the blockchain state.
 
-At a high level, the system must answer three questions:
+This data is maintained by the network and updated through valid transactions. It may include balances, contract variables, account data, permissions, ownership records, reservation status, payment information, or references to external resources.
 
-1. Which transactions are valid?
-2. In what order should valid transactions be applied?
-3. When should the resulting state be considered finalized?
+On-chain storage provides strong integration with the execution environment. Smart contracts and programs can directly read and update on-chain state according to protocol-level and application-level rules.
 
-These questions are central to distributed ledger systems because ledger state is not updated by a single centralized authority. Instead, updates are accepted according to protocol rules, validator behavior, and network-level assumptions.
+However, on-chain storage is usually expensive and limited. Since blockchain data must be replicated and verified by network participants, storing large amounts of data directly on-chain can create scalability and cost problems.
 
-### 1.1 Transaction Validation
+### 1.1 Advantages of On-chain Storage
 
-Transaction validation typically includes:
+On-chain storage provides:
 
-* signature verification;
-* account or balance checks;
-* permission checks;
-* fee or resource availability;
-* smart contract or program execution constraints;
-* consistency with the current state.
+* direct availability to smart contracts or programs;
+* strong auditability through transaction history;
+* integration with validation and execution rules;
+* transparent state updates;
+* reduced dependence on external systems for critical state.
 
-A transaction may be correctly signed but still invalid if it violates protocol rules, lacks sufficient resources, fails smart contract conditions, or attempts unauthorized state changes.
+### 1.2 Limitations of On-chain Storage
 
-### 1.2 Ordering
+On-chain storage also introduces limitations:
 
-Transaction ordering determines the sequence in which valid transactions are applied to ledger state.
+* high storage cost;
+* limited scalability;
+* increased transaction fees or resource consumption;
+* permanent exposure of public data;
+* difficulty modifying or deleting stored information;
+* larger burden on network replication.
 
-Ordering matters because the same set of transactions may produce different outcomes depending on execution order. This is especially relevant for smart contract platforms, where state-dependent logic, shared accounts, and external calls can create ordering-sensitive behavior.
-
-### 1.3 Finality
-
-Finality refers to the point at which a transaction or block is considered accepted with a strong expectation that it will not be reversed.
-
-Different platforms provide different finality assumptions. Some systems provide probabilistic finality, where confidence increases as more blocks are added. Others provide stronger checkpoint or quorum-based finality under specific validator assumptions.
-
-For this repository, finality is treated as a system-level trust property rather than an absolute guarantee.
+For this reason, decentralized applications often store only essential state on-chain and move larger or less critical data off-chain.
 
 ---
 
-## 2. Ethereum: Validation, Fork Choice, and Checkpoint Finality
+## 2. Off-chain Storage
 
-Ethereum validates transactions through account state, signatures, nonce rules, gas constraints, and deterministic EVM execution.
+Off-chain storage refers to data stored outside the blockchain state.
 
-A transaction must be signed by an externally owned account, include a valid nonce, provide sufficient fees, and execute within the gas limit. If execution fails, state changes may be reverted while gas can still be consumed.
+This can include files, images, metadata, documents, product descriptions, or other large application data. The blockchain may store only a reference to the off-chain data, such as a content hash, content identifier, or URI.
 
-### 2.1 Transaction Validation
+Off-chain storage reduces on-chain cost and improves scalability, but it changes the security and availability assumptions of the application.
 
-Ethereum transaction validation includes:
+The blockchain can verify that a stored reference corresponds to a particular piece of data. However, it does not automatically guarantee that the external data will remain available forever.
 
-* checking the sender signature;
-* verifying the account nonce;
-* verifying sufficient balance for value transfer and gas;
-* executing EVM bytecode deterministically;
-* updating state only if execution satisfies protocol rules.
-
-This validation model is closely tied to Ethereum’s account-based architecture. Since contracts hold persistent storage, transaction validity often depends on the current contract state.
-
-### 2.2 Ordering
-
-Transactions are ordered within blocks by block proposers.
-
-This ordering affects smart contract behavior because Ethereum execution is predominantly sequential. If two transactions interact with the same contract state, their final effect depends on the order in which they are included.
-
-This has security implications. Transaction ordering can affect front-running, sandwich attacks, liquidation behavior, and other forms of miner or validator extractable value.
-
-### 2.3 Finality
-
-Ethereum’s current consensus design is based on Proof of Stake.
-
-At a high level, validators propose blocks and attest to blocks. Fork-choice rules help determine the canonical chain head, while checkpoint finality provides stronger confirmation under validator participation and network assumptions.
-
-This means Ethereum finality should not be described as instant or absolute. It depends on validator behavior, network conditions, and the assumptions of the consensus protocol.
-
-For application developers, this distinction matters. A transaction may appear included before it reaches a stronger level of finality. Applications that handle payments, reservations, or asset transfers should therefore reason carefully about confirmation depth and finality expectations.
+Therefore, an on-chain reference to off-chain content should be understood primarily as an integrity reference, not as an availability guarantee.
 
 ---
 
-## 3. Solana: Validation, Ordering, and High-Throughput Execution
+## 3. IPFS and Content-addressed Storage
 
-Solana’s validation model is closely connected to its account-centric architecture.
+IPFS is a content-addressed peer-to-peer storage system.
 
-Transactions declare the accounts they will read or write. This declaration allows the runtime to validate account access and schedule non-conflicting transactions for parallel execution.
+Instead of identifying data by location, IPFS identifies data by its content. A file is associated with a content identifier, commonly referred to as a CID. If the content changes, the identifier changes as well.
 
-### 3.1 Transaction Validation
+This property is useful for blockchain applications because a smart contract or on-chain record can store a reference to a specific version of off-chain data.
 
-Solana transaction validation includes:
+For example, an application may store a product image, service document, or metadata file on IPFS, then store the corresponding CID on-chain.
 
-* signature verification;
-* account ownership checks;
-* writable and read-only account constraints;
-* signer requirements;
-* program instruction validation;
-* fee and compute budget constraints.
+This creates a separation between:
 
-A transaction must provide the accounts required by the program. The program then checks whether those accounts satisfy expected constraints. In frameworks such as Anchor, part of this validation can be expressed through account constraints.
+* on-chain state, which records ownership, permissions, payments, and references;
+* off-chain content, which stores larger files or descriptive data.
 
-This model gives developers explicit control over which accounts are accessed by an instruction. However, it also places responsibility on developers to validate ownership, signer status, account mutability, and program-specific invariants.
-
-### 3.2 Ordering and Parallel Execution
-
-Solana’s architecture separates transaction ordering from parallel execution more explicitly than Ethereum.
-
-Transactions that touch disjoint account sets can be executed in parallel, while transactions that conflict over writable accounts must be ordered relative to each other.
-
-This design can improve throughput under suitable workload conditions. However, it requires developers to reason carefully about account access patterns, account ownership, signer checks, and possible state contention.
-
-A poorly designed Solana program may still face bottlenecks if many transactions compete for the same writable accounts. Therefore, performance depends not only on the protocol architecture but also on application-level account design.
-
-### 3.3 Finality Assumptions
-
-Solana uses a consensus design built around validator voting, leader scheduling, and ordering mechanisms.
-
-In this context, Proof of History should be understood primarily as a time-ordering mechanism rather than as a complete standalone consensus protocol. Solana consensus also depends on validator voting and Tower BFT-style assumptions.
-
-For the purposes of this repository, the important point is that Solana’s finality and confirmation model depends on validator votes, network conditions, and platform-specific consensus assumptions.
-
-This document does not attempt to provide a complete formal description of Solana consensus. Instead, Solana is treated as an example of a high-throughput blockchain architecture where validation, account access, and execution scheduling are deeply connected.
+However, IPFS should not be treated as a complete availability solution by itself. Practical availability often depends on pinning services, gateways, user-hosted nodes, or other infrastructure. A CID allows the application to verify what the content should be, but it does not guarantee that the content is always retrievable.
 
 ---
 
-## 4. EOSIO: Delegated Validation and Block Producer Scheduling
+## 4. Integrity, Availability, and Cost
 
-EOSIO uses a Delegated Proof of Stake model in which block producers are selected to produce blocks according to protocol rules and governance assumptions.
+Storage design involves trade-offs between integrity, availability, and cost.
 
-Its validation model is closely tied to account permissions, action authorization, and resource availability.
+### 4.1 Integrity
 
-In this repository, EOSIO is discussed mainly in relation to the implementation environment used in the original undergraduate project. The goal is not to describe every evolution of the EOSIO or Antelope ecosystem, but to analyze the architectural model that was relevant to the comparative DApp implementation.
+Content-addressed storage helps preserve integrity.
 
-### 4.1 Transaction Validation
+If the data retrieved from IPFS does not match the expected content identifier, the mismatch can be detected. This makes IPFS useful for verifying that off-chain data has not been silently modified.
 
-EOSIO transaction validation includes:
+However, integrity does not imply availability. A valid content identifier only proves what the content should be, not that the content is currently accessible.
 
-* checking account permissions;
-* verifying authorization for actions;
-* applying CPU, NET, and RAM resource constraints;
-* executing WASM smart contract logic;
-* enforcing table and scope rules defined by contract code.
+### 4.2 Availability
 
-EOSIO’s permission model makes authorization a first-class part of transaction validation. Unlike systems where an account is mainly controlled by one private key, EOSIO accounts can define more expressive permission structures.
+Availability refers to whether data can actually be accessed when needed.
 
-This can be useful for applications that require delegated authority or role-based control. However, it also introduces risks if permissions are configured incorrectly or if contract actions do not enforce the expected authorization checks.
+If off-chain data is not pinned, hosted, or replicated, it may become unavailable even if the on-chain reference remains valid. This creates an important design requirement: decentralized applications using IPFS must consider how content is preserved and served.
 
-### 4.2 Ordering
+In practice, availability may depend on:
 
-EOSIO transactions are ordered through block producer scheduling and block production.
+* pinning services;
+* user-hosted IPFS nodes;
+* public or private gateways;
+* storage providers;
+* backup infrastructure.
 
-For this study, the important architectural point is that EOSIO does not use Solana-style explicit account-based parallel execution. Instead, its model emphasizes producer scheduling, account authorization, and resource governance.
+This means that off-chain storage introduces operational assumptions that are not present when data is stored directly on-chain.
 
-This gives EOSIO a different execution and trust profile from Ethereum and Solana.
+### 4.3 Cost
 
-### 4.3 Finality Assumptions
+Off-chain storage reduces on-chain cost because large data is not written directly into blockchain state.
 
-EOSIO’s confirmation and finality assumptions are tied to its Delegated Proof of Stake architecture and block producer behavior.
-
-This gives EOSIO a different trust model from Ethereum and Solana. It can provide performance and governance flexibility, but it also depends on assumptions about block producer selection, coordination, and accountability.
-
-For application developers, this means that trust is not only a technical matter. It is also related to governance, producer selection, and the operational behavior of the network.
+However, this does not remove cost entirely. Applications may still need to pay for pinning, hosting, gateway access, or storage infrastructure. The trade-off is therefore not “free storage”, but a shift from blockchain storage cost to external storage and availability management.
 
 ---
 
-## 5. Comparative Summary
+## 5. Platform Storage Comparison
 
-| Dimension             | Ethereum                                             | Solana                                                                     | EOSIO                                                         |
-| --------------------- | ---------------------------------------------------- | -------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| Main validation focus | Signatures, nonce, gas, EVM execution                | Signatures, account ownership, declared account access                     | Permissions, actions, resources, WASM execution               |
-| Ordering model        | Block proposer ordering and sequential execution     | Leader scheduling with parallel execution for non-conflicting account sets | Block producer scheduling                                     |
-| Execution dependency  | Contract state and EVM rules                         | Explicit account lists and program constraints                             | Account permissions and table-based state                     |
-| Resource constraint   | Gas                                                  | Fees, compute budget, account storage costs                                | CPU, NET, RAM                                                 |
-| Finality perspective  | Fork choice and checkpoint finality                  | Validator voting and confirmation assumptions                              | DPoS-based producer confirmation assumptions                  |
-| Main developer risk   | Ordering dependence, gas assumptions, external calls | Account validation errors, signer errors, account contention               | Permission errors, resource assumptions, scope/table mistakes |
+Ethereum, Solana, and EOSIO expose different storage models to developers.
+
+| Dimension             | Ethereum                                | Solana                                                                        | EOSIO                                               |
+| --------------------- | --------------------------------------- | ----------------------------------------------------------------------------- | --------------------------------------------------- |
+| Main storage unit     | Contract storage                        | Accounts                                                                      | Multi-index tables                                  |
+| State ownership       | Contract-owned storage                  | Program-owned accounts                                                        | Contract/account-scoped tables                      |
+| Storage cost model    | Gas and storage-related costs           | Account allocation, rent-exemption requirements, and account size constraints | RAM-based resource model                            |
+| Typical off-chain use | Metadata, files, images, documents      | Metadata, files, account-linked content                                       | Metadata, files, structured external content        |
+| Developer concern     | Gas cost and public state               | Account size, ownership, and allocation design                                | RAM usage and table scope                           |
+| Security concern      | Incorrect storage logic or exposed data | Incorrect account ownership, size, or authority assumptions                   | Permission, scope, and resource-management mistakes |
+
+This comparison shows that storage is not only a technical implementation detail. It affects cost, scalability, data integrity, application architecture, and security assumptions.
 
 ---
 
 ## 6. Security Perspective
 
-Consensus and validation directly affect security.
+Storage decisions introduce security assumptions.
 
-A platform’s consensus mechanism determines how participants agree on transaction ordering and ledger history. Its validation rules determine which transactions are allowed to change state. Its finality model affects how strongly users can rely on accepted transactions.
+When data is stored on-chain, the application benefits from stronger integration with the ledger, but it must handle cost, privacy, and immutability constraints.
 
-Security risks can arise when developers misunderstand these assumptions.
+When data is stored off-chain, the application reduces cost and improves flexibility, but it must handle integrity, availability, and external infrastructure risks.
 
-Examples include:
+Common risks include:
 
-* assuming transaction ordering is neutral;
-* relying on weak or incomplete authorization checks;
-* failing to validate account ownership or signer status;
-* misunderstanding finality and confirmation assumptions;
-* designing applications that depend on off-chain assumptions not enforced by the protocol.
+* storing sensitive data publicly on-chain;
+* relying on off-chain data that may disappear;
+* failing to verify content identifiers;
+* treating IPFS availability as guaranteed;
+* allowing inconsistent links between on-chain records and off-chain content;
+* designing smart contracts that trust external metadata without validation;
+* depending on centralized gateways or pinning services without acknowledging that dependency.
 
-For this reason, consensus and validation should not be treated as purely protocol-level topics. They also influence application security, smart contract design, and user trust.
+For this reason, storage models are directly connected to smart contract security and distributed systems design.
+
+A careful storage model should distinguish between:
+
+* data that must be validated by the blockchain;
+* data that only needs to be referenced by the blockchain;
+* data that must remain private;
+* data that must remain available over time;
+* data that can be reconstructed or replaced if needed.
 
 ---
 
 ## 7. Relevance to the Original Application
 
-The original decentralized tourism application involved reservations, payments, user accounts, and off-chain storage references.
+The original decentralized tourism application required storing different types of data:
 
-These features depend on validation and ordering assumptions:
+* product and service information;
+* reservation records;
+* payment-related state;
+* user interaction data;
+* images or descriptive files;
+* references to external content.
 
-* payment transactions must be authorized by the correct user;
-* reservation state must be updated consistently;
-* smart contract or program logic must prevent unauthorized changes;
-* off-chain references must be associated with valid on-chain records;
-* users must know when a transaction can be considered accepted.
+Storing all of this data directly on-chain would not be practical.
 
-Ethereum, Solana, and EOSIO handle these concerns through different mechanisms. This makes consensus and validation an important part of the broader architectural comparison.
+Instead, the application design followed a hybrid approach:
 
-In Ethereum, the application must account for gas usage, transaction ordering, and contract state dependencies.
+* critical state and transaction-related information remained on-chain;
+* larger descriptive data and files could be stored off-chain;
+* IPFS-based references could be linked to on-chain records.
 
-In Solana, the application must account for account ownership, signer requirements, writable account constraints, and possible state contention.
+This approach reflects a common decentralized application pattern: the blockchain is used for validation, ownership, payments, and state transitions, while external storage is used for larger or less frequently updated content.
 
-In EOSIO, the application must account for permissions, action authorization, resource limits, and table scope design.
-
-These differences show that consensus and validation are not isolated protocol details. They shape the practical design of decentralized applications.
+In the context of the tourism application, this distinction is important. Reservation status, payment information, ownership records, and authorization logic are suitable candidates for on-chain state. Images, descriptions, documents, and larger metadata are better handled through off-chain storage, provided that their references are managed carefully.
 
 ---
 
 ## Scope
 
-This document provides an architecture-level comparison of consensus and validation concepts.
+This document provides an architecture-level discussion of storage models.
 
 It does not provide:
 
-* a complete formal consensus specification;
-* a full proof of safety or liveness;
-* a benchmark of confirmation time;
-* a detailed analysis of validator economics;
-* a production-level security audit.
+* a full benchmark of storage costs;
+* a complete IPFS implementation guide;
+* a privacy analysis of all stored data;
+* a formal availability model;
+* a production-level storage security audit.
 
-These topics require deeper protocol-specific analysis and are outside the scope of this repository.
+These topics require deeper platform-specific and application-specific analysis.
 
 ---
 
 ## References Used
 
-This document is supported by the following references listed in [Literature Review and References](../academic-notes/literature-review.md):
+This document is supported by the references listed in [Literature Review and References](../academic-notes/literature-review.md), including:
 
-* Nakamoto, *Bitcoin: A Peer-to-Peer Electronic Cash System*
-* Lamport, Shostak, and Pease, *The Byzantine Generals Problem*
-* Castro and Liskov, *Practical Byzantine Fault Tolerance*
-* Buterin and Griffith, *Casper the Friendly Finality Gadget*
-* Yakovenko, *Solana: A New Architecture for a High Performance Blockchain*
-* Larimer, *EOS.IO Technical White Paper*
+* Benet, *IPFS — Content Addressed, Versioned, P2P File System*
+* IPFS Documentation
 * Ethereum Documentation
 * Solana Documentation
 * EOSIO / Antelope Documentation
@@ -270,5 +219,5 @@ This document is supported by the following references listed in [Literature Rev
 ## Navigation
 
 * [Back to README](../README.md)
-* Previous: [Blockchain Architectures](blockchain-architectures.md)
-* Next: [Storage Models](storage-models.md)
+* Previous: [Consensus and Validation](consensus-and-validation.md)
+* Next: [Security Models](security-models.md)
