@@ -11,6 +11,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+*.log
 
 # Package manager cache
 .yarn/
@@ -20,10 +21,12 @@ pnpm-debug.log*
 target/
 .anchor/
 test-ledger/
+.solana/
 **/target/
 **/.anchor/
 **/test-ledger/
 **/*.rs.bk
+anchor.toml.bak
 
 # Solana private keys / local wallets
 id.json
@@ -59,3 +62,4 @@ venv/
 .DS_Store
 .vscode/
 .idea/
+.cache/
