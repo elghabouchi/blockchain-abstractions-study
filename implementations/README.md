@@ -1,12 +1,12 @@
 # Implementations
 
-This directory contains platform-specific implementation materials related to the original practical project and its academic restructuring.
+This directory contains the platform-specific implementation materials used in this repository.
 
-The implementations are organized by blockchain platform and are used as practical evidence for the comparative study developed in the main documentation.
+The implementations come from the original practical project on blockchain applications in the tourism domain. In this repository, they are reorganized as supporting material for a comparative academic study of blockchain architectures, storage models, transaction validation, and security assumptions.
 
-The purpose of this directory is not to present production-ready applications. Instead, it preserves and organizes implementation artifacts that support the analysis of blockchain architectures, account models, transaction validation, storage choices, and security assumptions.
+These implementations are not presented as production-ready applications. They are included as prototype evidence that helps connect the conceptual analysis with concrete development experience.
 
-## Directory Overview
+## Directory Structure
 
 ```text
 implementations/
@@ -15,11 +15,13 @@ implementations/
 └── eosio/         # EOSIO CDT-based implementation materials
 ```
 
-## Platform Implementations
+## Platform Overview
 
 ### Ethereum
 
-The `ethereum/` directory is intended to contain the Solidity-based implementation materials, smart contract interaction notes, frontend integration notes, and security observations related to the Ethereum version of the tourism DApp prototype.
+The `ethereum/` directory is reserved for the Solidity-based implementation.
+
+It is intended to document smart contracts, local deployment, frontend interaction, wallet-based transaction signing, and Ethereum-specific observations related to the tourism DApp prototype.
 
 Status: documentation to be completed.
 
@@ -31,16 +33,16 @@ Reference:
 
 The `solana/` directory contains the Rust and Anchor-based implementation of the tourism DApp prototype.
 
-This implementation documents:
+It currently documents:
 
 * Solana account-based execution;
 * Program Derived Accounts;
 * wallet-based transaction signing;
 * hybrid on-chain/off-chain storage using IPFS CIDs;
 * purchase-history account creation;
-* implementation-level security assumptions.
+* prototype-level security assumptions and limitations.
 
-The Solana implementation is currently the most structured implementation directory in this repository. Its README describes the current prototype state, while its security notes document known limitations and future improvements.
+The Solana implementation currently has the most developed documentation in this directory. Its README describes the implementation state, while its security notes document known limitations and future improvement points.
 
 References:
 
@@ -49,7 +51,9 @@ References:
 
 ### EOSIO
 
-The `eosio/` directory is intended to contain the EOSIO CDT-based implementation materials, including smart contract deployment notes, account and permission configuration, transaction interaction notes, and platform-specific observations.
+The `eosio/` directory is reserved for the EOSIO CDT-based implementation.
+
+It is intended to document contract deployment, account and permission configuration, command-line interaction, transaction execution, and EOSIO-specific development observations.
 
 Status: documentation to be completed.
 
@@ -57,34 +61,34 @@ Reference:
 
 * [EOSIO implementation README](./eosio/README.md)
 
-## Role in the Main Study
+## Role in the Study
 
-These implementations support the academic study by providing concrete material for comparing:
+The implementation directories support the broader academic study by providing concrete material for comparing:
 
 * smart contract and program models;
 * account and state representations;
 * transaction construction and signing;
-* execution and validation assumptions;
+* validation and execution assumptions;
 * on-chain and off-chain storage decisions;
 * platform-specific development constraints;
 * basic security limitations.
 
-The implementation directories should be read together with the conceptual documents in `docs/` and the academic notes in `academic-notes/`.
+These materials should be read together with the conceptual documents in `docs/` and the academic notes in `academic-notes/`.
 
 ## Documentation Status
 
-The current repository is being developed progressively.
+The repository is being documented progressively.
 
-At this stage:
+Current status:
 
-* the Solana implementation has an initial structured README and security notes;
-* the Ethereum implementation still requires a dedicated README and security notes;
-* the EOSIO implementation still requires a dedicated README and security notes.
+* Solana has an initial structured README and security notes.
+* Ethereum still requires a dedicated implementation README and security notes.
+* EOSIO still requires a dedicated implementation README and security notes.
 
-This staged documentation process is intentional. The goal is to preserve the original practical project while gradually reorganizing it into a clearer academic repository.
+This staged process is intentional. The goal is to preserve the original practical work while gradually reorganizing it into a clearer academic repository.
 
-## Notes
+## Note
 
-The implementations are not presented as audited or production-ready systems.
+The implementations are prototype materials derived from a final-year practical project.
 
-They should be interpreted as prototype evidence derived from a practical final-year project and reused here to support architectural comparison and security-oriented discussion.
+They should be interpreted as implementation evidence for architectural comparison and security-oriented discussion, not as audited or production-ready systems.
