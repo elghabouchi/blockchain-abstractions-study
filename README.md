@@ -1,6 +1,6 @@
 # Blockchain Abstractions Study
 
-An academic repository for studying blockchain and distributed ledger systems through comparative implementations across Ethereum, Solana, and EOSIO.
+An academic repository for studying blockchain and distributed ledger systems through comparative implementations across Ethereu and Solana.
 
 This project is based on my undergraduate final-year project and reorganized as a documentation-oriented study of blockchain architectures, smart contract execution models, transaction validation, and on-chain/off-chain storage strategies.
 
@@ -70,7 +70,7 @@ blockchain-abstractions-study/
 ├── implementations/
 │   ├── ethereum/
 │   ├── solana/
-│   └── eosio/
+
 
 └── diagrams/
     ├── architecture-overview.png
