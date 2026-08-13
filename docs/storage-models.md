@@ -2,11 +2,11 @@
 
 ## Overview
 
-This document discusses storage models in blockchain-based applications, with a focus on the distinction between on-chain storage and off-chain content-addressed storage.
+This document discusses storage models in blockchain based applications, with a focus on the distinction between on-chain storage and off-chain content addressed storage.
 
 It builds on the concepts introduced in [Distributed Ledger Abstractions](distributed-ledger-abstractions.md) and the platform comparison presented in [Blockchain Architectures](blockchain-architectures.md).
 
-The goal is to examine how Ethereum, Solana, and EOSIO handle application state, and how external storage systems such as IPFS can be used to reduce on-chain storage requirements while preserving verifiable references to off-chain data.
+The goal is to examine how Ethereum and Solana handle application state, and how external storage systems such as IPFS can be used to reduce on-chain storage requirements while preserving verifiable references to off-chain data.
 
 This document does not provide a complete storage benchmark. Instead, it identifies the main architectural trade-offs relevant to decentralized application design.
 
@@ -18,7 +18,7 @@ On-chain storage refers to data stored directly in the blockchain state.
 
 This data is maintained by the network and updated through valid transactions. It may include balances, contract variables, account data, permissions, ownership records, reservation status, payment information, or references to external resources.
 
-On-chain storage provides strong integration with the execution environment. Smart contracts and programs can directly read and update on-chain state according to protocol-level and application-level rules.
+On-chain storage provides strong integration with the execution environment. Smart contracts and programs can directly read and update on-chain state according to protocol level and application level rules.
 
 However, on-chain storage is usually expensive and limited. Since blockchain data must be replicated and verified by network participants, storing large amounts of data directly on-chain can create scalability and cost problems.
 
@@ -118,16 +118,17 @@ However, this does not remove cost entirely. Applications may still need to pay 
 
 ## 5. Platform Storage Comparison
 
-Ethereum, Solana, and EOSIO expose different storage models to developers.
+Ethereum and Solana expose different storage models to developers.
 
-| Dimension             | Ethereum                                | Solana                                                                        | EOSIO                                               |
-| --------------------- | --------------------------------------- | ----------------------------------------------------------------------------- | --------------------------------------------------- |
-| Main storage unit     | Contract storage                        | Accounts                                                                      | Multi-index tables                                  |
-| State ownership       | Contract-owned storage                  | Program-owned accounts                                                        | Contract/account-scoped tables                      |
-| Storage cost model    | Gas and storage-related costs           | Account allocation, rent-exemption requirements, and account size constraints | RAM-based resource model                            |
-| Typical off-chain use | Metadata, files, images, documents      | Metadata, files, account-linked content                                       | Metadata, files, structured external content        |
-| Developer concern     | Gas cost and public state               | Account size, ownership, and allocation design                                | RAM usage and table scope                           |
-| Security concern      | Incorrect storage logic or exposed data | Incorrect account ownership, size, or authority assumptions                   | Permission, scope, and resource-management mistakes |
+| Dimension             | Ethereum                                | Solana                                                                        |
+| --------------------- | --------------------------------------- | ----------------------------------------------------------------------------- |
+| Main storage unit     | Contract storage                        | Accounts                                                                      |
+| State ownership       | Contract-owned storage                  | Program-owned accounts                                                        |
+| Storage cost model    | Gas and storage-related costs           | Account allocation, rent-exemption requirements, and account size constraints |
+| Typical off-chain use | Metadata, files, images, documents      | Metadata, files, account-linked content                                       |
+| Developer concern     | Gas cost and public state               | Account size, ownership, and allocation design                                |
+| Security concern      | Incorrect storage logic or exposed data | Incorrect account ownership, size, or authority assumptions                   |
+
 
 This comparison shows that storage is not only a technical implementation detail. It affects cost, scalability, data integrity, application architecture, and security assumptions.
 
