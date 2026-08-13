@@ -21,7 +21,7 @@ This section provides the recommended reading order for the repository. The stud
    Introduces the distributed ledger concepts used throughout the study.
 
 3. **[Blockchain Architectures](docs/blockchain-architectures.md)**
-   Compares the architectural models of Ethereum, Solana, and EOSIO.
+   Compares the architectural models of Ethereum and Solana.
 
 4. **[Consensus and Validation](docs/consensus-and-validation.md)**
    Discusses transaction validation, ordering, finality, and trust assumptions.
@@ -36,7 +36,7 @@ This section provides the recommended reading order for the repository. The stud
    Explains how the comparative analysis is structured.
 
 8. **[Comparative Analysis](academic-notes/comparative-analysis.md)**
-   Provides a platform-level comparison of Ethereum, Solana, and EOSIO.
+   Provides a platform-level comparison of Ethereum and Solana.
 
 9. **[Research Observations](academic-notes/research-observations.md)**
    Summarizes the main observations extracted from the study.

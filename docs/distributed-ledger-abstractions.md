@@ -8,9 +8,9 @@ A distributed ledger can be understood as a shared system for recording state tr
 
 Blockchain platforms implement this idea through different architectural models, but they often share common conceptual properties such as replicated state, transaction validation, auditability, immutability, and programmable execution.
 
-The goal of this document is not to provide a complete theoretical treatment of distributed ledger systems. Instead, it identifies the principal abstractions that will be used to compare Ethereum, Solana, and EOSIO throughout this study.
+The goal of this document is not to provide a complete theoretical treatment of distributed ledger systems. Instead, it identifies the principal abstractions that will be used to compare Ethereum and Solana throughout this study.
 
-The abstractions presented here are informed by a practical undergraduate project in which decentralized application prototypes were implemented on Ethereum, Solana, and EOSIO. In this repository, that implementation experience is reorganized as a comparative study of blockchain architectures, storage models, validation mechanisms, and security assumptions.
+The abstractions presented here are informed by a practical undergraduate project in which decentralized application prototypes were implemented on Ethereum and Solana. In this repository, that implementation experience is reorganized as a comparative study of blockchain architectures, storage models, validation mechanisms, and security assumptions.
 
 ---
 
@@ -20,13 +20,13 @@ The abstractions presented here are informed by a practical undergraduate projec
 
 A distributed ledger maintains a shared representation of system state.
 
-This state may represent account balances, smart contract variables, ownership records, permissions, metadata, or application-specific data. Each blockchain platform defines its own method for representing and updating this state.
+This state may represent account balances, smart contract variables, ownership records, permissions, metadata, or application specific data. Each blockchain platform defines its own method for representing and updating this state.
 
 For example:
 
 * Ethereum uses a global account-based state model.
 * Solana uses accounts as explicit data containers accessed by programs.
-* EOSIO uses account permissions and table-based storage structures.
+
 
 Although the internal models differ, each platform provides mechanisms for maintaining and updating shared state in a verifiable manner.
 
@@ -44,7 +44,7 @@ This abstraction enables comparison across platforms through a common question:
 
 ### 3. Validation
 
-Before a transaction is accepted, it must satisfy platform-specific validation rules.
+Before a transaction is accepted, it must satisfy platform specific validation rules.
 
 These rules may include:
 
@@ -65,7 +65,7 @@ Replication allows participants, in principle, to verify accepted transactions a
 
 This creates auditability by maintaining a visible and verifiable record of state transitions.
 
-Auditability does not automatically imply application security. While transaction history can be inspected, application correctness still depends on smart contract logic, access control mechanisms, and platform-specific assumptions.
+Auditability does not automatically imply application security. While transaction history can be inspected, application correctness still depends on smart contract logic, access control mechanisms, and platform specific assumptions.
 
 ### 5. Immutability
 
@@ -75,7 +75,7 @@ In blockchain systems, immutability is supported by cryptographic linking, conse
 
 Once transactions are accepted and finalized, modifying historical records becomes difficult under normal operating assumptions.
 
-For this study, immutability is treated as a system-level property rather than an absolute guarantee. Its strength depends on the platform architecture, consensus model, validator set, and finality assumptions.
+For this study, immutability is treated as a system level property rather than an absolute guarantee. Its strength depends on the platform architecture, consensus model, validator set, and finality assumptions.
 
 ### 6. Trust Assumptions
 
@@ -91,9 +91,9 @@ For the purposes of this study, trust assumptions are examined through the behav
 
 Smart contracts and on-chain programs enable distributed ledgers to support programmable execution.
 
-Application rules can be encoded directly into transaction-processing logic and executed as part of the ledger's state transition process.
+Application rules can be encoded directly into transaction processing logic and executed as part of the ledger's state transition process.
 
-Programmable execution enables decentralized applications, token systems, marketplaces, reservation workflows, access-control mechanisms, and other application-specific services.
+Programmable execution enables decentralized applications, token systems, marketplaces, reservation workflows, access control mechanisms, and other application-specific services.
 
 However, programmable execution also introduces risks. Software defects, incorrect assumptions, weak authorization controls, or unsafe state transitions may result in security vulnerabilities.
 
@@ -123,7 +123,7 @@ A platform's state model influences ownership representation, authorization mech
 
 Similarly, storage decisions influence integrity, availability, and operational costs, while trust assumptions shape the system's resilience against adversarial behavior.
 
-For this reason, the study of distributed ledger abstractions is not only architectural. It also provides a foundation for understanding smart contract security, transaction safety, and platform-level trust assumptions.
+For this reason, the study of distributed ledger abstractions is not only architectural. It also provides a foundation for understanding smart contract security, transaction safety, and platform level trust assumptions.
 
 ---
 
@@ -131,7 +131,7 @@ For this reason, the study of distributed ledger abstractions is not only archit
 
 This document provides the conceptual foundation for the remaining documents in this repository.
 
-Ethereum, Solana, and EOSIO are examined because they were used in the original implementation project and because they represent different architectural approaches to programmable distributed ledgers. EOSIO is included as a historically relevant platform that provides useful contrasts in governance, resource management, and permission design.
+Ethereum and Solana are examined because they were used in the original implementation project and because they represent different architectural approaches to programmable distributed ledgers. 
 
 The following documents use these abstractions to analyze:
 
@@ -139,7 +139,7 @@ The following documents use these abstractions to analyze:
 * consensus and validation mechanisms;
 * on-chain and off-chain storage trade-offs;
 * security assumptions;
-* platform-level comparisons between Ethereum, Solana, and EOSIO.
+* platform level comparisons between Ethereum and Solana.
 
 ---
 
