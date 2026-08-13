@@ -2,11 +2,11 @@
 
 ## Overview
 
-This document discusses consensus and transaction validation in Ethereum, Solana, and EOSIO.
+This document discusses consensus and transaction validation in Ethereum and Solana.
 
 It builds on the architectural comparison introduced in [Blockchain Architectures](blockchain-architectures.md) and focuses on how each platform handles transaction ordering, validation, finality, and trust assumptions.
 
-The goal is not to provide a full formal treatment of consensus protocols. Instead, this document identifies the consensus-related concepts that are relevant for comparing blockchain platforms from a distributed systems and security perspective.
+The goal is not to provide a full formal treatment of consensus protocols. Instead, this document identifies the consensus related concepts that are relevant for comparing blockchain platforms from a distributed systems and security perspective.
 
 Consensus and validation are closely related but distinct:
 
@@ -45,7 +45,7 @@ A transaction may be correctly signed but still invalid if it violates protocol 
 
 Transaction ordering determines the sequence in which valid transactions are applied to ledger state.
 
-Ordering matters because the same set of transactions may produce different outcomes depending on execution order. This is especially relevant for smart contract platforms, where state-dependent logic, shared accounts, and external calls can create ordering-sensitive behavior.
+Ordering matters because the same set of transactions may produce different outcomes depending on execution order. This is especially relevant for smart contract platforms, where state dependent logic, shared accounts, and external calls can create ordering sensitive behavior.
 
 ### 1.3 Finality
 
@@ -130,64 +130,26 @@ A poorly designed Solana program may still face bottlenecks if many transactions
 
 Solana uses a consensus design built around validator voting, leader scheduling, and ordering mechanisms.
 
-In this context, Proof of History should be understood primarily as a time-ordering mechanism rather than as a complete standalone consensus protocol. Solana consensus also depends on validator voting and Tower BFT-style assumptions.
+In this context, Proof of History should be understood primarily as a time ordering mechanism rather than as a complete standalone consensus protocol. Solana consensus also depends on validator voting and Tower BFT-style assumptions.
 
 For the purposes of this repository, the important point is that Solana’s finality and confirmation model depends on validator votes, network conditions, and platform-specific consensus assumptions.
 
 This document does not attempt to provide a complete formal description of Solana consensus. Instead, Solana is treated as an example of a high-throughput blockchain architecture where validation, account access, and execution scheduling are deeply connected.
 
----
-
-## 4. EOSIO: Delegated Validation and Block Producer Scheduling
-
-EOSIO uses a Delegated Proof of Stake model in which block producers are selected to produce blocks according to protocol rules and governance assumptions.
-
-Its validation model is closely tied to account permissions, action authorization, and resource availability.
-
-In this repository, EOSIO is discussed mainly in relation to the implementation environment used in the original undergraduate project. The goal is not to describe every evolution of the EOSIO or Antelope ecosystem, but to analyze the architectural model that was relevant to the comparative DApp implementation.
-
-### 4.1 Transaction Validation
-
-EOSIO transaction validation includes:
-
-* checking account permissions;
-* verifying authorization for actions;
-* applying CPU, NET, and RAM resource constraints;
-* executing WASM smart contract logic;
-* enforcing table and scope rules defined by contract code.
-
-EOSIO’s permission model makes authorization a first-class part of transaction validation. Unlike systems where an account is mainly controlled by one private key, EOSIO accounts can define more expressive permission structures.
-
-This can be useful for applications that require delegated authority or role-based control. However, it also introduces risks if permissions are configured incorrectly or if contract actions do not enforce the expected authorization checks.
-
-### 4.2 Ordering
-
-EOSIO transactions are ordered through block producer scheduling and block production.
-
-For this study, the important architectural point is that EOSIO does not use Solana-style explicit account-based parallel execution. Instead, its model emphasizes producer scheduling, account authorization, and resource governance.
-
-This gives EOSIO a different execution and trust profile from Ethereum and Solana.
-
-### 4.3 Finality Assumptions
-
-EOSIO’s confirmation and finality assumptions are tied to its Delegated Proof of Stake architecture and block producer behavior.
-
-This gives EOSIO a different trust model from Ethereum and Solana. It can provide performance and governance flexibility, but it also depends on assumptions about block producer selection, coordination, and accountability.
-
-For application developers, this means that trust is not only a technical matter. It is also related to governance, producer selection, and the operational behavior of the network.
 
 ---
 
 ## 5. Comparative Summary
 
-| Dimension             | Ethereum                                             | Solana                                                                     | EOSIO                                                         |
-| --------------------- | ---------------------------------------------------- | -------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| Main validation focus | Signatures, nonce, gas, EVM execution                | Signatures, account ownership, declared account access                     | Permissions, actions, resources, WASM execution               |
-| Ordering model        | Block proposer ordering and sequential execution     | Leader scheduling with parallel execution for non-conflicting account sets | Block producer scheduling                                     |
-| Execution dependency  | Contract state and EVM rules                         | Explicit account lists and program constraints                             | Account permissions and table-based state                     |
-| Resource constraint   | Gas                                                  | Fees, compute budget, account storage costs                                | CPU, NET, RAM                                                 |
-| Finality perspective  | Fork choice and checkpoint finality                  | Validator voting and confirmation assumptions                              | DPoS-based producer confirmation assumptions                  |
-| Main developer risk   | Ordering dependence, gas assumptions, external calls | Account validation errors, signer errors, account contention               | Permission errors, resource assumptions, scope/table mistakes |
+| Dimension             | Ethereum                                             | Solana                                                                     |
+| --------------------- | ---------------------------------------------------- | -------------------------------------------------------------------------- |
+| Main validation focus | Signatures, nonce, gas, EVM execution                | Signatures, account ownership, declared account access                     |
+| Ordering model        | Block proposer ordering and sequential execution     | Leader scheduling with parallel execution for non-conflicting account sets |
+| Execution dependency  | Contract state and EVM rules                         | Explicit account lists and program constraints                             |
+| Resource constraint   | Gas                                                  | Fees, compute budget, account storage costs                                |
+| Finality perspective  | Fork choice and checkpoint finality                  | Validator voting and confirmation assumptions                              |
+| Main developer risk   | Ordering dependence, gas assumptions, external calls | Account validation errors, signer errors, account contention               |
+
 
 ---
 
@@ -223,13 +185,12 @@ These features depend on validation and ordering assumptions:
 * off-chain references must be associated with valid on-chain records;
 * users must know when a transaction can be considered accepted.
 
-Ethereum, Solana, and EOSIO handle these concerns through different mechanisms. This makes consensus and validation an important part of the broader architectural comparison.
+Ethereum and Solana handle these concerns through different mechanisms. This makes consensus and validation an important part of the broader architectural comparison.
 
 In Ethereum, the application must account for gas usage, transaction ordering, and contract state dependencies.
 
 In Solana, the application must account for account ownership, signer requirements, writable account constraints, and possible state contention.
 
-In EOSIO, the application must account for permissions, action authorization, resource limits, and table scope design.
 
 These differences show that consensus and validation are not isolated protocol details. They shape the practical design of decentralized applications.
 
@@ -237,7 +198,7 @@ These differences show that consensus and validation are not isolated protocol d
 
 ## Scope
 
-This document provides an architecture-level comparison of consensus and validation concepts.
+This document provides an architecture level comparison of consensus and validation concepts.
 
 It does not provide:
 
@@ -245,9 +206,9 @@ It does not provide:
 * a full proof of safety or liveness;
 * a benchmark of confirmation time;
 * a detailed analysis of validator economics;
-* a production-level security audit.
+* a production level security audit.
 
-These topics require deeper protocol-specific analysis and are outside the scope of this repository.
+These topics require deeper protocol specific analysis and are outside the scope of this repository.
 
 ---
 
@@ -260,10 +221,8 @@ This document is supported by the following references listed in [Literature Rev
 * Castro and Liskov, *Practical Byzantine Fault Tolerance*
 * Buterin and Griffith, *Casper the Friendly Finality Gadget*
 * Yakovenko, *Solana: A New Architecture for a High Performance Blockchain*
-* Larimer, *EOS.IO Technical White Paper*
 * Ethereum Documentation
 * Solana Documentation
-* EOSIO / Antelope Documentation
 
 ---
 
