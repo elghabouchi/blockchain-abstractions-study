@@ -222,7 +222,7 @@ rather than to produce unsupported platform rankings.
 
 ---
 
-## 6. Implementation-Based Validation
+## 6. Implementation Based Evidence
 
 Practical implementations are used to verify whether the architectural abstractions identified in the documentation can be observed in application development.
 
@@ -284,5 +284,5 @@ This separation is intended to make the reasoning process traceable from source 
 ## Navigation
 
 * [Back to README](../README.md)
-* Previous:  [Security Models](security-models.md)
+* Previous:  [Security Models](../docs/security-models.md)
 * Next: [Comparative Analysis](./comparative-analysis.md)
