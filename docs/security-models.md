@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document discusses the security assumptions and risk patterns that arise from the architectural models of Ethereum, Solana, and EOSIO.
+This document discusses the security assumptions and risk patterns that arise from the architectural models of Ethereum and Solana.
 
 It builds on the previous documents:
 
@@ -15,7 +15,7 @@ The goal is not to provide a complete smart contract audit or a formal security 
 
 Security in blockchain applications depends on several layers:
 
-* protocol-level validation;
+* protocol level validation;
 * consensus and finality assumptions;
 * smart contract or program logic;
 * account and permission models;
@@ -47,7 +47,7 @@ This layered view is useful because different platforms expose different risks t
 
 ## 2. Ethereum Security Model
 
-Ethereum’s security model is closely related to its account-based architecture, EVM execution, gas model, and contract composability.
+Ethereum’s security model is closely related to its account based architecture, EVM execution, gas model, and contract composability.
 
 ### 2.1 Account and Authorization Assumptions
 
@@ -74,7 +74,7 @@ Common risks include:
 * incorrect handling of external calls;
 * unsafe assumptions about called contracts;
 * dependency on transaction ordering;
-* access-control mistakes.
+* access control mistakes.
 
 These risks are especially relevant in applications involving payments, reservations, or ownership changes, where state must be updated consistently.
 
@@ -84,10 +84,10 @@ Ethereum execution is limited by gas.
 
 Gas prevents unbounded computation, but it also affects application design. Developers must account for the cost of computation and storage. A function that is logically correct may still be impractical if it consumes too much gas.
 
-Gas-related assumptions can affect:
+Gas related assumptions can affect:
 
 * contract usability;
-* denial-of-service risks;
+* denial of service risks;
 * storage design;
 * loop and iteration patterns;
 * transaction failure behavior.
@@ -135,45 +135,10 @@ Frameworks such as Anchor help reduce some account-validation boilerplate by all
 
 However, a framework does not remove the need to understand the underlying account model. Incorrect constraints or missing validation logic can still produce vulnerabilities.
 
-For this reason, Solana security requires both framework-level knowledge and a clear understanding of the runtime’s account model.
+For this reason, Solana security requires both framework level knowledge and a clear understanding of the runtime’s account model.
 
 ---
 
-## 4. EOSIO Security Model
-
-EOSIO’s security model is based on named accounts, configurable permissions, actions, resource management, and table-based state.
-
-### 4.1 Permission-Based Authorization
-
-EOSIO accounts can define permission levels such as `owner` and `active`, and can support more complex authorization structures.
-
-This makes access control more explicit than in platforms where accounts are primarily controlled by a single key. However, it also introduces configuration complexity.
-
-Security risks may arise from:
-
-* overly broad permissions;
-* incorrect action authorization;
-* weak permission hierarchy design;
-* misuse of delegated authority;
-* failure to enforce authorization inside contract actions.
-
-### 4.2 Actions and Contract Logic
-
-EOSIO smart contracts execute actions.
-
-Each action must enforce the expected authorization checks and state updates. A contract may be structurally correct but still insecure if actions allow unauthorized accounts to modify state.
-
-This is relevant for applications involving reservations, payments, or ownership records, where state changes must be tied to properly authorized users.
-
-### 4.3 Resource Assumptions
-
-EOSIO separates resources such as CPU, NET, and RAM.
-
-This gives developers more explicit control over resource planning, but it also creates security and operational assumptions. Applications must account for whether users or contracts have enough resources to execute required actions and store necessary state.
-
-Resource exhaustion or mismanagement can affect application availability and usability.
-
----
 
 ## 5. Storage-Related Security Assumptions
 
@@ -181,9 +146,9 @@ Storage design introduces security risks across all platforms.
 
 On-chain storage provides stronger integration with validation and auditability, but it is public, expensive, and difficult to modify or delete. Off-chain storage reduces cost and improves flexibility, but it introduces availability and infrastructure assumptions.
 
-When using IPFS or similar content-addressed storage, a content identifier can help verify integrity. However, it does not guarantee that the content will remain available.
+When using IPFS or similar content addressed storage, a content identifier can help verify integrity. However, it does not guarantee that the content will remain available.
 
-Common storage-related risks include:
+Common storage related risks include:
 
 * storing sensitive information on-chain;
 * assuming off-chain data is always available;
@@ -204,8 +169,8 @@ A developer should not assume that transaction ordering is neutral or irrelevant
 
 Risks may include:
 
-* front-running;
-* transaction-ordering dependence;
+* front running;
+* transaction ordering dependence;
 * inconsistent state updates;
 * premature reliance on unfinalized transactions;
 * incorrect assumptions about confirmation depth;
@@ -217,13 +182,14 @@ For applications involving reservations and payments, this is especially importa
 
 ## 7. Comparative Security Summary
 
-| Dimension             | Ethereum                                                     | Solana                                                                     | EOSIO                                                    |
-| --------------------- | ------------------------------------------------------------ | -------------------------------------------------------------------------- | -------------------------------------------------------- |
-| Main security focus   | Contract logic, composability, gas, ordering                 | Account validation, signer checks, ownership, PDAs                         | Permissions, actions, resources, table scopes            |
-| Common developer risk | Reentrancy, access-control errors, external call assumptions | Account substitution, missing signer checks, invalid ownership assumptions | Permission misconfiguration, action authorization errors |
-| Storage risk          | Public and costly contract storage                           | Incorrect account sizing or ownership assumptions                          | RAM and table-scope management issues                    |
-| Ordering risk         | Sequential ordering and MEV-related assumptions              | Account contention and scheduling assumptions                              | Block producer ordering assumptions                      |
-| Authorization model   | Signatures plus contract-level checks                        | Signatures plus account/program constraints                                | Configurable account permissions                         |
+| Dimension             | Ethereum                                                     | Solana                                                                     |
+| --------------------- | ------------------------------------------------------------ | -------------------------------------------------------------------------- |
+| Main security focus   | Contract logic, composability, gas, ordering                 | Account validation, signer checks, ownership, PDAs                         |
+| Common developer risk | Reentrancy, access control errors, external call assumptions | Account substitution, missing signer checks, invalid ownership assumptions |
+| Storage risk          | Public and costly contract storage                           | Incorrect account sizing or ownership assumptions                          |
+| Ordering risk         | Sequential ordering and MEV related assumptions              | Account contention and scheduling assumptions                              |
+| Authorization model   | Signatures plus contract level checks                        | Signatures plus account/program constraints                                |
+
 
 ---
 
@@ -240,11 +206,10 @@ These features require several security assumptions:
 * users should understand when a transaction can be considered accepted;
 * sensitive data should not be stored publicly on-chain.
 
-The same application-level requirements lead to different security concerns depending on the platform:
+The same application level requirements lead to different security concerns depending on the platform:
 
 * in Ethereum, contract logic, external calls, gas, and ordering assumptions are central;
 * in Solana, account validation, signer checks, and ownership constraints are central;
-* in EOSIO, permissions, actions, resources, and table scopes are central.
 
 This confirms that blockchain security is not only about cryptography. It also depends on architecture, execution model, storage design, and developer assumptions.
 
@@ -252,7 +217,7 @@ This confirms that blockchain security is not only about cryptography. It also d
 
 ## Scope
 
-This document provides an architecture-level discussion of security models.
+This document provides an architecture level discussion of security models.
 
 It does not provide:
 
@@ -260,9 +225,9 @@ It does not provide:
 * a formal verification of any implementation;
 * a full taxonomy of all blockchain vulnerabilities;
 * a production security assessment;
-* a proof of protocol-level security.
+* a proof of protocol level security.
 
-These topics require deeper platform-specific analysis and are outside the scope of this repository.
+These topics require deeper platform specific analysis and are outside the scope of this repository.
 
 ---
 
@@ -276,7 +241,6 @@ This document is supported by the references listed in [Literature Review and Re
 * Ethereum Documentation
 * Solana Documentation
 * Anchor Documentation
-* EOSIO / Antelope Documentation
 
 ---
 
