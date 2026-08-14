@@ -16,12 +16,12 @@ How do fundamentally different blockchain architectural models implement and sup
 
 ### 1. State and Account Representations
 
-How do Ethereum’s account-based global state model, Solana’s account-centric execution model differ in their approaches to data ownership, access control, and resource management?
+How do Ethereum’s account-based global state model and Solana’s account-centric execution model differ in their approaches to data ownership, access control, and resource management?
 
 
 ### 2. Transaction Execution and Concurrency
 
-What are the architectural trade offs between Ethereum’s predominantly sequential transaction execution model, Solana’s parallel execution approach through Sealevel  with respect to performance, determinism, and system complexity?
+What are the architectural trade offs between Ethereum’s predominantly sequential transaction execution model and Solana’s parallel execution approach through Sealevel  with respect to performance, determinism, and system complexity?
 
 
 ### 3. Storage and Data Availability

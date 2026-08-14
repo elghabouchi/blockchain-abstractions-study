@@ -213,7 +213,6 @@ This document is supported by the references listed in [Literature Review and Re
 * IPFS Documentation
 * Ethereum Documentation
 * Solana Documentation
-* EOSIO / Antelope Documentation
 
 ---
 

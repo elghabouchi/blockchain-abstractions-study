@@ -1,6 +1,6 @@
 # Blockchain Abstractions Study
 
-An academic repository for studying blockchain and distributed ledger systems through comparative implementations across Ethereu and Solana.
+An academic repository for studying blockchain and distributed ledger systems through comparative implementations across Ethereum and Solana.
 
 This project is based on my undergraduate final-year project and reorganized as a documentation-oriented study of blockchain architectures, smart contract execution models, transaction validation, and on-chain/off-chain storage strategies.
 
@@ -96,7 +96,7 @@ It does not aim to propose a new blockchain protocol, introduce a new consensus 
 
 The original implementation was developed in the context of a decentralized tourism application involving product and service publication, reservation workflows, wallet-based payments, smart contract interaction, and IPFS-based storage.
 
-In this repository, that application is used only as a practical context for studying distributed ledger abstractions and platform-level trade-offs.
+In this repository, that application is used only as a practical context for studying distributed ledger abstractions and platform level   trade-offs.
 
 ## Research Relevance
 
@@ -117,7 +117,7 @@ It also connects practical blockchain development with broader research preparat
 
 ## Disclaimer
 
-This repository is educational and academic-oriented. The implementations and notes are not intended for production use without further security review, testing, and formal analysis.
+This repository is educational and academic oriented. The implementations and notes are not intended for production use without further security review, testing, and formal analysis.
 
 ## Author
 

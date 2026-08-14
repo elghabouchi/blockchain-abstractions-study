@@ -114,7 +114,7 @@ Common risks include accepting the wrong account, failing to verify ownership, o
 
 ## 5. Architectural Trade-offs
 
-The three platforms represent different architectural priorities.
+The two platforms represent different architectural priorities.
 
 **Ethereum** prioritizes a uniform smart contract model and strong composability. This makes it easier to build interoperable applications, but the predominantly sequential execution model and gas market can create scalability and cost constraints.
 
