@@ -113,7 +113,6 @@ It also connects practical blockchain development with broader research preparat
 ## Related Repositories
 
 * [Crypto Research Lab](https://github.com/elghabouchi/crypto-research-lab)
-* [Smart Contract Security Lab](https://github.com/elghabouchi/smart-contract-security-lab)
 
 ## Disclaimer
 
